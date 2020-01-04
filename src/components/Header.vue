@@ -19,6 +19,7 @@
     methods:{
       add(){
         const title = this.title.trim();
+        if(!title) return
         const todo = {
           id: Date.now(),
           complete: false,

@@ -6,7 +6,7 @@
             <input type="checkbox" v-model="todo.complete"/>
             <span>{{todo.title}}</span>
         </label>
-        <button class="btn btn-danger" v-show="isShow">删除</button>
+        <button class="btn btn-danger" v-show="isShow" @click="confirmDeleteTodo">删除</button>
     </li>
   </div>
 </template>
@@ -15,7 +15,9 @@
   export default {
       //声明接收属性：指定属性名/属性值的类型
       props:{
-          todo:Object,
+          todo: Object,
+          deleteTodo: Function,
+          index: Number
       },
       data(){
           return{
@@ -31,6 +33,11 @@
               } else{
                   this.bgColor = 'white';
                   this.isShow = false;
+              }
+          },
+          confirmDeleteTodo(){
+              if(confirm('你确定删除吗？')){
+                  this.deleteTodo(this.index)
               }
           }
       }
@@ -68,8 +75,8 @@
         content: initial;
     }
 
-    li:last-child {
-        /* border-bottom: none; */
-    }
+    /* li:last-child {
+        border-bottom: none;
+    } */
 
 </style>
