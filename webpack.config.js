@@ -76,6 +76,20 @@ module.exports = {
         port:8888,
         open:true,
         quiet:true,
+        //配置代理
+        proxy:{
+            '/api':{
+                target: 'http://localhost:4000',
+                pathRewrite: {'^/api':''},
+                changeOrigin: true,
+            },
+            '/3000':{
+                target: 'http://localhost:3000',
+                pathRewrite: {'^/3000':''},
+                changeOrigin: true,
+            },
+        },
+        historyApiFallback: true, //请求404时返回index页面
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'], // 可以省略的后缀名
@@ -85,5 +99,7 @@ module.exports = {
           '@comps': resolve('src/components'),  
 
         }
-    }
+    },
+    //开启source-map , 源码调试 , 不会产生文件，集成在文件中，不会产生列
+    devtool: 'cheap-module-eval-source-map',
 }
