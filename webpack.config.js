@@ -77,7 +77,7 @@ module.exports = {
         open:true,
         quiet:true,
         //配置代理
-        proxy:{
+        /*proxy:{
             '/api':{
                 target: 'http://localhost:4000',
                 pathRewrite: {'^/api':''},
@@ -88,7 +88,7 @@ module.exports = {
                 pathRewrite: {'^/3000':''},
                 changeOrigin: true,
             },
-        },
+        },*/
         historyApiFallback: true, //请求404时返回index页面
     },
     resolve: {
