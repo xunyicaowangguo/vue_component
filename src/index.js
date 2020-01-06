@@ -6,7 +6,14 @@ import './app.css'
 
 Vue.config.productionTip = false
 
+//给Vue的原型对象添加一个属性
+// Vue.prototype.$vm = new Vue()
+
 new Vue({
   el: '#root',
-  render: h => h(App)
+  render: h => h(App),
+  beforeCreate () { // 在尽量早时间保存当前vm, 作为全局事件总线对象
+    // Vue.prototype.$globalEventBus = this
+    this.__proto__.$globalEventBus = this
+  }
 })

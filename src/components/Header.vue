@@ -26,7 +26,9 @@
           // title: this.title,
           title,
         }
-        this.addTodo(todo)
+        //添加todo
+        // this.addTodo(todo)
+        this.$emit('addTodo2',todo)
         //清除输入
         this.title = ''
       }

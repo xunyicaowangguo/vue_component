@@ -14,7 +14,7 @@
     export default {
         props:{
             todos: Array,
-            checkAllTodos: Function,
+            // checkAllTodos: Function,
             cleanCompleteTodo: Function,
         },
         
@@ -28,8 +28,9 @@
                     return this.completeSize === this.todos.length && this.completeSize > 0
                 },
                 set(value){
-                    // console.log(value);
-                    this.checkAllTodos(value)
+                    console.log(value);
+                    // this.checkAllTodos(value)
+                    this.$globalEventBus.$emit('checkAllTodos',value)
                 }
             }
         },

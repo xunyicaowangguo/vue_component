@@ -1,9 +1,13 @@
 <template>
   <div class="todo-container">
     <div class="todo-wrap">
-      <Header :addTodo="addTodo"/>
-      <List :todos="todos" :deleteTodo="deleteTodo"/>
-      <Footer :todos="todos" :checkAllTodos="checkAllTodos" :cleanCompleteTodo="cleanCompleteTodo"/>  
+      <!-- <Header :addTodo="addTodo"/> -->
+      <!-- <Header @addTodo2="addTodo"/> -->
+      <Header ref="header"/>
+      <!-- <List :todos="todos" :deleteTodo="deleteTodo"/> -->
+      <List :todos="todos" ref="list"/>
+      <!-- <Footer :todos="todos" :checkAllTodos="checkAllTodos" :cleanCompleteTodo="cleanCompleteTodo"/>   -->
+      <Footer :todos="todos" :cleanCompleteTodo="cleanCompleteTodo" ref="footer"/>  
     </div>
   </div>
 </template>
@@ -25,11 +29,29 @@
       }
     },
     mounted(){
+
+      // this.$vm.$on('deleteTodo',(index)=>{
+      //   this.todos.splice(index,1)
+      // })
+      this.$globalEventBus.$on('deleteTodo',this.deleteTodo)
+      this.$globalEventBus.$on('checkAllTodos',this.checkAllTodos)
+      //给<Header>组件对象绑定自定义事件监听
+      //绑定自定义事件监听和分发事件的组件对象得是同一个
+      this.$refs.header.$on('addTodo2',this.addTodo)
+
       setTimeout(()=>{
         // this.todos = JSON.parse(localStorage.getItem('todos_key')) || []
         this.todos = JSON.parse(localStorage.getItem('todos_key'|| '[]')) 
       },1000)
     },
+
+    beforeDestroy(){
+      //解绑自定义事件监听
+      this.$refs.header.$off('addTodo2')
+      this.$refs.list.$off('deleteTodo')
+      this.$refs.footer.$off('checkAllTodos')
+    },
+
     methods:{
       addTodo(todo){
         this.todos.unshift(todo)
@@ -42,7 +64,9 @@
       },
       cleanCompleteTodo(){
         // this.todos = this.todos.filter((todo)=>{return !todo.complete})
-        this.todos = this.todos.filter( todo => !todo.complete )
+        if(confirm('确定删除吗？')){
+          this.todos = this.todos.filter( todo => !todo.complete )
+        }
       },
     },
     watch:{

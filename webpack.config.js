@@ -80,7 +80,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json'], // 可以省略的后缀名
         alias: { // 模块路径别名(简写方式)
-        //   'vue$': 'vue/dist/vue.esm.js',  // 默认查找vue/dist/vue.runtime.js
+          'vue$': 'vue/dist/vue.esm.js',  // 默认查找vue/dist/vue.runtime.js
           '@': resolve('src'),
           '@comps': resolve('src/components'),  
 
